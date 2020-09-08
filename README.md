@@ -1,0 +1,1 @@
+# cargo-ya-wasi-pkg
