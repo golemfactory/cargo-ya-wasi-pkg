@@ -49,15 +49,15 @@ pub fn push_file(file_path: impl AsRef<Path>) -> anyhow::Result<String> {
         let client = reqwest::blocking::Client::builder().build()?;
 
         let upload_url = format!("{}/upload/{}", base_url, image_name);
-        client
-            .post(&upload_url)
+        let r = client
+            .put(&upload_url)
             .body(fs::File::open(file_path)?)
             .send()?;
     }
     {
         let client = reqwest::blocking::Client::builder().build()?;
-        client
-            .post(&format!("{}/upload/image.{}.link", base_url, hash))
+        let r = client
+            .put(&format!("{}/upload/image.{}.link", base_url, hash))
             .body(download_url.as_bytes().to_vec())
             .send()?;
     }
